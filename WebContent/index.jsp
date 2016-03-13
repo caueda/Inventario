@@ -30,6 +30,11 @@
 		<div id="mensagem" title="Deploy realizado com sucesso!">
 			<p>Parabéns. O deploy no Glassfish foi realizado com sucesso!!!</p>
 		</div>
+		<div>
+			<ul class="nav nav-tabs">
+				<li role="presentation" ><a href="home.curso">Home</a></li>
+			</ul>
+		</div>
 	</div>
 </body>
 </html>
