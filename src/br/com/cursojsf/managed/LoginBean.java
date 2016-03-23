@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class LoginBean implements Serializable {
 
-	private static final long serialVersionUID = -5263706623967677173L;
+	private static final long serialVersionUID = -5263706623967677173L;	
 	
 	private String login;
 	private String senha;
@@ -41,6 +41,7 @@ public class LoginBean implements Serializable {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		message.setSummary("Logado com sucesso.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
+		
 //		return "home";
 	}
 }
