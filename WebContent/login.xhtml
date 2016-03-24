@@ -21,8 +21,9 @@
 	<h:form>
 		<div class="container">
 			<LABEL for="username">Login:</LABEL>
-			<h:inputText id="username" label="Usuário:" value="#{modelBean.username}" />
-			<h:commandButton value="Logar" />
+			<h:inputText id="username" label="Usuário:" value="#{loginBean.login}" />
+			<h:inputText id="senha" label="Senha:" value="#{loginBean.senha}" />
+			<h:commandButton id="botao" value="Logar" action="#{loginBean.login}"/>
 		</div>
 	</h:form>
 </h:body>
