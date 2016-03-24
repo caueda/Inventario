@@ -3,7 +3,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-	<base href="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/"></base>
+	<base href="http://localhost:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/"></base>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
 
@@ -15,16 +15,35 @@
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
     <link href="style/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"></link>
     <script src="style/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script>
+    	$(function(){
+    		if($("#mensagem ul li").html()){
+    			$("#mensagem").dialog();
+    		}
+    	});
+    </script>
+    
     <title>Login</title>
 </h:head>	
 <h:body>
-	<h:form>
-		<div class="container">
+	<h:form id="form" styleClass="form-inline" prependId="false">
+		<div class="form-group">
 			<LABEL for="username">Login:</LABEL>
-			<h:inputText id="username" label="Usuário:" value="#{loginBean.login}" />
-			<h:inputText id="senha" label="Senha:" value="#{loginBean.senha}" />
-			<h:commandButton id="botao" value="Logar" action="#{loginBean.login}"/>
+			<h:inputText id="username" styleClass="form-control" value="#{loginBean.login}" required="true"/>
+			<h:message for="username"/>
 		</div>
+		<div class="form-group">
+			<LABEL for="senha">Senha:</LABEL>
+			<h:inputSecret id="senha" styleClass="form-control" value="#{loginBean.senha}" required="true"/>
+			<h:message for="senha"/>
+		</div>
+		<div class="form-group">			
+			<h:commandButton value="Logar" action="#{loginBean.logar}"/>
+		</div>
+		<div id="mensagem" style="display:none;">
+			<h:messages styleClass="unstyled"/>
+		</div>		
 	</h:form>
 </h:body>
 </html>
