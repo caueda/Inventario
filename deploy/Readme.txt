@@ -18,7 +18,7 @@ jboss-logging-3.3.0.Final.jar (in the WEB-INF/lib)
 	<jdbc-resource pool-name="InventarioPool" object-type="system-all" jndi-name="jdbc/InventarioPool"></jdbc-resource>
 	<jdbc-connection-pool connection-validation-method="auto-commit" datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" 
 			wrap-jdbc-objects="false" res-type="javax.sql.DataSource" name="InventarioPool">
-      <property name="URL" value="jdbc:mysql://localhost:3306/inventario?zeroDateTimeBehavior=convertToNull"></property>
+      <property name="URL" value="jdbc:mysql://localhost:3306/inventario?relaxAutoCommit=true"></property>
       <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
       <property name="Password" value="welcome1"></property>
       <property name="portNumber" value="3306"></property>

@@ -1,9 +1,12 @@
 package br.com.cursojsf.ejb.login;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,12 +23,20 @@ public class LoginBean implements Serializable {
 	@PersistenceContext(unitName="inventario")
 	private EntityManager em;
 	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean autenticar(String email, String senha) throws Exception {		
-		Query query = em.createNamedQuery("usuario.findByEmailSenha");
+		Query query = em.createNamedQuery("Usuario.findByEmailSenha");
 		query.setParameter("email", email);
 		query.setParameter("senha", senha);
-		List<Usuario> usuario = query.getResultList();
-		return (!usuario.isEmpty()) && (!usuario.get(0).equals(new Usuario()));
+		List<Usuario> usuarios = query.getResultList();
+		if(usuarios != null && !usuarios.isEmpty()){
+			Usuario user = usuarios.get(0);
+			if(!user.equals(new Usuario())){
+				user.setDataLogin(new Date());
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean remoteLogin(String email, String senha) throws Exception {

@@ -1,6 +1,7 @@
 package br.com.cursojsf.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -28,6 +31,7 @@ public class Usuario implements Serializable {
 	private Long idUsuario;
 	private String email;
 	private String senha;
+	private Date dataLogin;
 	
 	public Usuario(){
 		
@@ -60,6 +64,16 @@ public class Usuario implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	@Column(name="data_login")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getDataLogin() {
+		return dataLogin;
+	}
+
+	public void setDataLogin(Date dataLogin) {
+		this.dataLogin = dataLogin;
 	}
 
 	@Override
