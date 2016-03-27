@@ -39,6 +39,7 @@ public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_usuario")
 	public Long getIdUsuario() {
 		return idUsuario;
 	}

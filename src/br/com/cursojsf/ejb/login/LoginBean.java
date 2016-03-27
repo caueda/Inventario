@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -22,6 +24,22 @@ public class LoginBean implements Serializable {
 
 	@PersistenceContext(unitName="inventario")
 	private EntityManager em;
+	
+	@PostConstruct
+	private void initializa(){
+		/*
+		 * It will be executed before any other method 
+		 */
+		System.out.println("Method init [LoginBean] invoked at " + new java.util.Date());
+	}
+	
+	@PreDestroy
+	private void destroy(){
+		/*
+		 * 
+		 */
+		System.out.println("Finalizing LoginBean at " + new java.util.Date());
+	}
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean autenticar(String email, String senha) throws Exception {		

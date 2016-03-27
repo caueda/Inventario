@@ -2,11 +2,11 @@ package br.com.cursojsf.managed;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 
 import br.com.cursojsf.ejb.login.LoginBean;
 
@@ -16,7 +16,7 @@ public class LoginAction implements Serializable {
 
 	private static final long serialVersionUID = -5263706623967677173L;	
 	
-	@Inject
+	@EJB
 	private LoginBean loginBean;
 	
 	private String login;
@@ -47,7 +47,7 @@ public class LoginAction implements Serializable {
 			if(loginBean.autenticar(getLogin(), getSenha())){
 				FacesMessage message = new FacesMessage();
 				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				message.setSummary("Logado com sucesso.");
+				message.setSummary("Logado com sucesso!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			} else {
 				FacesMessage message = new FacesMessage();

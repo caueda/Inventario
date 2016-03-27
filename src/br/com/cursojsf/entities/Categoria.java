@@ -25,6 +25,7 @@ public class Categoria implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_categoria")
 	public Long getIdCategoria() {
 		return idCategoria;
 	}
