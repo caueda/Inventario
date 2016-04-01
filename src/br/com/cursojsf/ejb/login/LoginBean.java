@@ -9,6 +9,8 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,8 +19,9 @@ import javax.persistence.Query;
 import br.com.cursojsf.entities.Usuario;
 
 @Named
+@TransactionManagement(TransactionManagementType.CONTAINER)
 @Stateless
-public class LoginBean implements Serializable {
+public class LoginBean implements Serializable{
 	
 	private static final long serialVersionUID = -1466922676838989315L;
 
@@ -41,7 +44,8 @@ public class LoginBean implements Serializable {
 		System.out.println("Finalizing LoginBean at " + new java.util.Date());
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	@SuppressWarnings("unchecked")
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean autenticar(String email, String senha) throws Exception {		
 		Query query = em.createNamedQuery("Usuario.findByEmailSenha");
 		query.setParameter("email", email);
@@ -57,8 +61,7 @@ public class LoginBean implements Serializable {
 		return false;
 	}
 
-	public boolean remoteLogin(String email, String senha) throws Exception {
-		
+	public boolean remoteLogin(String email, String senha) throws Exception {		
 		return autenticar(email, senha);
 	}
 	
