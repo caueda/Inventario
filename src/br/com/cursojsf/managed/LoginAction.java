@@ -7,12 +7,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.com.cursojsf.ejb.login.LoginBean;
 
 @ManagedBean
 @RequestScoped
-public class LoginAction implements Serializable {
+public class LoginAction extends AbstractManagedBean implements Serializable {
 
 	private static final long serialVersionUID = -5263706623967677173L;	
 	
@@ -42,25 +43,25 @@ public class LoginAction implements Serializable {
 		this.senha = senha;
 	}
 	
-	public void logar(){
+	public String logar(){
 		try {
 			if(loginBean.autenticar(getLogin(), getSenha())){
-				FacesMessage message = new FacesMessage();
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				message.setSummary("Logado com sucesso!");
-				FacesContext.getCurrentInstance().addMessage(null, message);
+				
+				 HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+				return "home";
 			} else {
 				FacesMessage message = new FacesMessage();
 				message.setSeverity(FacesMessage.SEVERITY_INFO);
 				message.setSummary("Email ou senha incorretos.");
 				FacesContext.getCurrentInstance().addMessage(null, message);
+				return "";
 			}
 		} catch (Exception e) {
 			FacesMessage message = new FacesMessage();
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			message.setSummary(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-//		return "home";
+			return "";
+		}		
 	}
 }

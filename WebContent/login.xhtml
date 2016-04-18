@@ -2,15 +2,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-    <script>
-    	$(function(){
-    		if($("#mensagem ul li").html()){
-    			$("#mensagem").dialog();
-    		}
-    	});
-    </script>
-    
+<h:head>    
     <title>Login</title>
 </h:head>	
 <h:body>
@@ -30,9 +22,6 @@
 				</div>
 				<h:commandButton value="Logar" action="#{loginAction.logar}" styleClass="btn btn-primary"/>
 			</h:form>		
-			<div id="mensagem" style="display:none;" title="Mensagem">
-				<h:messages styleClass="has-error" globalOnly="true" />
-			</div>		
 		</ui:define>
 	</ui:composition>
 </h:body>
