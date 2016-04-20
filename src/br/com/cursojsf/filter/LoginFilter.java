@@ -1,6 +1,7 @@
 package br.com.cursojsf.filter;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -39,9 +40,10 @@ public class LoginFilter implements Filter {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
+	public String getURL(final HttpServletRequest req) {
+		return "http://" + req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath() + "/";
+	}
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {		
 	    HttpServletRequest req = (HttpServletRequest) request;
 	    HttpServletResponse res = (HttpServletResponse) response;
@@ -53,15 +55,11 @@ public class LoginFilter implements Filter {
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setDateHeader("Expires", 0); // Proxies.
 	    
-	    if (!path.contains("login")) {
+	    if (!path.contains("login.curso") && !Pattern.matches(".*\\.css.*|.*\\.js.*|.*\\.css\\.curso.*|.*\\.js\\.curso.*", path)) {
 	        if (login != null) {
-	            if (login.getIdUsuario() != null && !login.getEmail().equals("")) {
-	                chain.doFilter(request, response);
-	            } else {
-	                res.sendRedirect(context + "/login.curso");
-	            }
+	        	chain.doFilter(request, response);
 	        } else {
-	            res.sendRedirect(context + "/login.curso");
+	        	res.sendRedirect(getURL(req) + "login.curso");
 	        }
 	    } else {
 	        chain.doFilter(request, response);
