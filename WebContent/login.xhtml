@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"  
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>    
     <title>Login</title>
@@ -9,19 +10,19 @@
 	<ui:composition template="/template/mainTemplate.xhtml">
 		<ui:define name="titulo">Login</ui:define>
 		<ui:define name="corpo">			
-			<h:form id="form" prependId="false">
-				<div class="form-group">
-					<LABEL for="username">Login:</LABEL>					
-					<h:inputText id="username" styleClass="form-control" value="#{loginAction.login}" required="true"/>
-					<h:message for="username"/>					
-				</div>
-				<div class="form-group">
-					<LABEL for="senha">Senha:</LABEL>					
-					<h:inputSecret id="senha" styleClass="form-control" value="#{loginAction.senha}" required="true"/>
-					<h:message for="senha"/>				
-				</div>
-				<h:commandButton value="Logar" action="#{loginAction.logar}" styleClass="btn btn-primary"/>
-			</h:form>		
+			<h:panelGrid id="grid" style="margin: 0 auto;">		
+				<h:form id="form" prependId="false">					
+					<p:panel header="Autênticação">
+						<p:outputLabel for="username" value="E-mail"/>					
+						<p:inputText id="username" value="#{loginAction.login}" required="true" requiredMessage="O E-mail é obrigatório."/>
+						<p:message for="username"/>					
+						<p:outputLabel for="senha" value="Senha"/>
+						<p:password  id="senha" value="#{loginAction.senha}" required="true" requiredMessage="A senha é obrigatória."/>						
+						<p:message for="senha"/>						
+						<p:commandButton value="Logar" action="#{loginAction.logar}" update="grid"/>
+					</p:panel>			
+				</h:form>	
+			</h:panelGrid>	
 		</ui:define>
 	</ui:composition>
 </h:body>

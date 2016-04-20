@@ -10,6 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.cursojsf.ejb.login.LoginBean;
+import br.com.cursojsf.entities.UserBean;
+import br.com.cursojsf.entities.Usuario;
 
 @ManagedBean
 @RequestScoped
@@ -45,14 +47,17 @@ public class LoginAction extends AbstractManagedBean implements Serializable {
 	
 	public String logar(){
 		try {
-			if(loginBean.autenticar(getLogin(), getSenha())){
-				
+			Usuario usuario = loginBean.autenticar(getLogin(), getSenha());
+			if(usuario != null){				
 				 HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-				return "home";
+				 UserBean userBean = new UserBean(usuario);				 
+				 cacheSession(userBean, session, true);
+				return redirect("home");
 			} else {
 				FacesMessage message = new FacesMessage();
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
+				message.setSeverity(FacesMessage.SEVERITY_WARN);
 				message.setSummary("Email ou senha incorretos.");
+				message.setDetail("");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 				return "";
 			}
@@ -60,8 +65,18 @@ public class LoginAction extends AbstractManagedBean implements Serializable {
 			FacesMessage message = new FacesMessage();
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			message.setSummary(e.getMessage());
+			message.setDetail("");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return "";
 		}		
+	}
+	
+	public String logout() {
+		HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		UserBean userBean = (UserBean)session.getAttribute(UserBean.USER_LOGGED);
+		if(userBean != null) {
+			return super.lougout(userBean, session, true);
+		}
+		return redirect("login");
 	}
 }

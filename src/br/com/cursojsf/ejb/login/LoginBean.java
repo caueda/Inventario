@@ -46,7 +46,7 @@ public class LoginBean implements Serializable{
 	
 	@SuppressWarnings("unchecked")
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean autenticar(String email, String senha) throws Exception {		
+	public Usuario autenticar(String email, String senha) throws Exception {		
 		Query query = em.createNamedQuery("Usuario.findByEmailSenha");
 		query.setParameter("email", email);
 		query.setParameter("senha", senha);
@@ -55,13 +55,13 @@ public class LoginBean implements Serializable{
 			Usuario user = usuarios.get(0);
 			if(!user.equals(new Usuario())){
 				user.setDataLogin(new Date());
-				return true;
+				return user;
 			}
 		}
-		return false;
+		return null;
 	}
 
-	public boolean remoteLogin(String email, String senha) throws Exception {		
+	public Usuario remoteLogin(String email, String senha) throws Exception {		
 		return autenticar(email, senha);
 	}
 	

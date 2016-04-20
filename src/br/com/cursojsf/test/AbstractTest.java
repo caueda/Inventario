@@ -8,6 +8,7 @@ import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 
 import br.com.cursojsf.ejb.login.LoginBean;
+import br.com.cursojsf.entities.Usuario;
 
 
 public class AbstractTest {
@@ -28,8 +29,8 @@ public class AbstractTest {
 		Context context = ejbC.getContext();
 		String name = "java:global/Inventario/LoginBean";
 		LoginBean bean = (LoginBean)context.lookup(name);
-		boolean isLoggedIn = bean.remoteLogin("aplicacao@test.com", "welcome1");
-		System.out.println(isLoggedIn);
+		Usuario usuario = bean.remoteLogin("aplicacao@test.com", "welcome1");
+		System.out.println(usuario != null);
 	}
 
 }
