@@ -7,8 +7,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>	
 	<base href="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/"></base>
 	
-	<script type="text/javascript" src="scripts/jquery-1.12.1.min.js"></script>
-    
     <style>
 		html,
 		body {
@@ -125,9 +123,22 @@
         </h1>
         <div class="panel-container">        	
             <div class="panel-left">
-                <h:form>
+                <h:form>                	
 				    <p:growl autoUpdate="true"/>
-				 
+				    
+					<!-- 				    
+					<p:confirmDialog id="dlgLoggedOut" global="true" showEffect="fade" hideEffect="fade" header="Logar novamente"
+				    				visible="true" message="Sua sessão foi inativada. Logue novamente.">
+				        <p:commandButton value="Login" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{idleMonitorView.goLogin}"/>				        
+				    </p:confirmDialog>
+				                	     
+				    <p:idleMonitor timeout="5000" >
+				        <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="dlgLoggedOut">
+				        	<f:attribute name="monitor" value="true"/>				        	
+				        </p:ajax>				        
+				    </p:idleMonitor>	 
+				    -->
+				    
 				    <p:panelMenu style="width:250">
 				        <p:submenu label="Ajax Menuitems">
 				            <p:menuitem value="Save" actionListener="#{loginAction.logout}" icon="ui-icon-disk" />
@@ -154,9 +165,14 @@
             <div class="panel-right">
             	<div class="content">
             	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
-                <ui:insert name="aplicacao"></ui:insert>
+            	<h:form>
+                	<ui:insert name="aplicacao"></ui:insert>
+                </h:form>
                 </div>
             </div>
         </div>		
 </h:body>
+<script>
+$('.panel-left').resizable();
+</script>
 </html>

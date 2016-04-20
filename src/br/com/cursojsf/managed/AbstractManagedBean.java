@@ -13,11 +13,14 @@ import br.com.cursojsf.entities.UserBean;
 
 public class AbstractManagedBean {	
 	
+	@SuppressWarnings("unchecked")
 	public void cacheSession(UserBean userBean, HttpSession session, boolean onlyOneSessionPerUser) {
+		
 		session.setAttribute(UserBean.USER_LOGGED, userBean);
 		if(!getApplicationMap().containsKey(userBean.getKey())) {
 			getApplicationMap().put(userBean.getKey(), new HashMap<String, HttpSession>());
 		}
+		
 		Map<String, HttpSession> cacheSessions = (Map<String, HttpSession>)getApplicationMap().get(userBean.getKey());
 		if(onlyOneSessionPerUser) {
 			for(HttpSession sessionToInvalidate : cacheSessions.values()) {
@@ -25,6 +28,7 @@ public class AbstractManagedBean {
 			}
 			cacheSessions.clear();
 		}
+		
 		cacheSessions.put(session.getId(), session);
 	}
 	

@@ -1,6 +1,7 @@
 package br.com.cursojsf.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 import javax.servlet.DispatcherType;
@@ -30,14 +31,12 @@ public class LoginFilter implements Filter {
      * Default constructor. 
      */
     public LoginFilter() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 	public String getURL(final HttpServletRequest req) {
@@ -48,14 +47,23 @@ public class LoginFilter implements Filter {
 	    HttpServletRequest req = (HttpServletRequest) request;
 	    HttpServletResponse res = (HttpServletResponse) response;
 	    UserBean login = (UserBean) req.getSession().getAttribute(UserBean.USER_LOGGED);
-	    String path = req.getRequestURI().substring(req.getContextPath().length());	    
-	    String context = request.getServletContext().getContextPath();
+	    String path = req.getRequestURI().substring(req.getContextPath().length());	  
+	    
+	    @SuppressWarnings("unused")
+		String context = request.getServletContext().getContextPath();
 	    
 	    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setDateHeader("Expires", 0); // Proxies.
+        
+	    System.out.println(path);
+//	    
+//	    Enumeration<String> names = req.getAttributeNames();
+//	    while(names.hasMoreElements()) {
+//	    	System.out.println(">>>>>>>> " + names.nextElement());
+//	    }
 	    
-	    if (!path.contains("login.curso") && !Pattern.matches(".*\\.css.*|.*\\.js.*|.*\\.css\\.curso.*|.*\\.js\\.curso.*", path)) {
+	    if (!path.contains("login.curso") && !Pattern.matches(".*\\.js|.*\\.css.curso|.*\\.js.curso", path)) {
 	        if (login != null) {
 	        	chain.doFilter(request, response);
 	        } else {
@@ -70,7 +78,6 @@ public class LoginFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }

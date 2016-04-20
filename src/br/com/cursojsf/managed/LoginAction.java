@@ -45,6 +45,16 @@ public class LoginAction extends AbstractManagedBean implements Serializable {
 		this.senha = senha;
 	}
 	
+    public void onIdle() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                                        "Nenhuma atividade.", "O que você está fazendo por aí ?"));
+    }
+ 
+    public void onActive() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                        "Bem vindo", "Esta foi uma longa parada para o café!"));
+    }
+	
 	public String logar(){
 		try {
 			Usuario usuario = loginBean.autenticar(getLogin(), getSenha());
