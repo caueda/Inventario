@@ -1,7 +1,6 @@
 package br.com.cursojsf.filter;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 import javax.servlet.DispatcherType;
@@ -63,8 +62,8 @@ public class LoginFilter implements Filter {
 //	    	System.out.println(">>>>>>>> " + names.nextElement());
 //	    }
 	    
-	    if (!path.contains("login.curso") && !Pattern.matches(".*\\.js|.*\\.css.curso|.*\\.js.curso", path)) {
-	        if (login != null) {
+	    if (!path.contains("login.curso") && !Pattern.matches(".*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)) {
+	        if (login != null) {	
 	        	chain.doFilter(request, response);
 	        } else {
 	        	res.sendRedirect(getURL(req) + "login.curso");

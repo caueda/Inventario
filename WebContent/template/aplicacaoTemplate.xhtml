@@ -115,7 +115,10 @@
 		  overflow: auto;
 		}
 	</style>
-    <title><ui:insert name="titulo">Título da Página</ui:insert></title>
+    <title><ui:insert name="titulo">Inventário</ui:insert></title>
+    
+    <ui:insert name="script"></ui:insert>
+    
 </h:head>	
 <h:body>			
         <h1>
@@ -123,7 +126,7 @@
         </h1>
         <div class="panel-container">        	
             <div class="panel-left">
-                <h:form>                	
+                <h:form id="menu" prependId="false">                	
 				    <p:growl autoUpdate="true"/>
 				    
 					<!-- 				    
@@ -140,12 +143,8 @@
 				    -->
 				    
 				    <p:panelMenu style="width:250">
-				        <p:submenu label="Ajax Menuitems">
-				            <p:menuitem value="Save" actionListener="#{loginAction.logout}" icon="ui-icon-disk" />
-				            <p:menuitem value="Update" actionListener="#{loginAction.logout}"  icon="ui-icon-arrowrefresh-1-w" />
-				        </p:submenu>
-				        <p:submenu label="Non-Ajax Menuitem">
-				            <p:menuitem value="Delete" actionListener="#{loginAction.logout}"  ajax="false" icon="ui-icon-close"/>
+				        <p:submenu label="Usuário">
+				            <p:menuitem value="Manter" action="/application/user/usuario"  ajax="true" icon="ui-icon-close"/>
 				        </p:submenu>
 				        <p:separator />
 				        <p:submenu label="Navigations" >
@@ -157,17 +156,17 @@
 				                    <p:menuitem value="Support" url="http://www.primefaces.org/support" icon="ui-icon-wrench" />
 				                </p:submenu>
 				            </p:submenu>
-				            <p:menuitem value="Logout" outcome="/login" icon="ui-icon-power" />
+				            <p:menuitem value="Logout" action="#{loginAction.logout}" icon="ui-icon-power" />
 				        </p:submenu>
 				    </p:panelMenu>
 				</h:form>
             </div>		
             <div class="panel-right">
             	<div class="content">
-            	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
-            	<h:form>
-                	<ui:insert name="aplicacao"></ui:insert>
-                </h:form>
+	            	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
+	            	<h:form id="form" prependId="false">
+	                	<ui:insert name="aplicacao"></ui:insert>
+	                </h:form>
                 </div>
             </div>
         </div>		

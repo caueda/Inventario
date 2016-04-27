@@ -63,29 +63,21 @@ public class LoginAction extends AbstractManagedBean implements Serializable {
 				 UserBean userBean = new UserBean(usuario);				 
 				 cacheSession(userBean, session, true);
 				return redirect("home");
-			} else {
-				FacesMessage message = new FacesMessage();
-				message.setSeverity(FacesMessage.SEVERITY_WARN);
-				message.setSummary("Email ou senha incorretos.");
-				message.setDetail("");
-				FacesContext.getCurrentInstance().addMessage(null, message);
+			} else {				
+				incluirWarning("E-mail ou senha incorretos.");
 				return "";
 			}
 		} catch (Exception e) {
-			FacesMessage message = new FacesMessage();
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			message.setSummary(e.getMessage());
-			message.setDetail("");
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			incluirError(e.getMessage());
 			return "";
 		}		
 	}
 	
-	public String logout() {
+	public String logout() throws Exception {
 		HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		UserBean userBean = (UserBean)session.getAttribute(UserBean.USER_LOGGED);
 		if(userBean != null) {
-			return super.lougout(userBean, session, true);
+			return super.logout(userBean, session, true);
 		}
 		return redirect("login");
 	}

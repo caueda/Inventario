@@ -18,7 +18,7 @@
     <welcome-file>login.curso</welcome-file>
   </welcome-file-list>
   <error-page>
-    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>    
     <location>/login.curso?faces-redirect=true</location>
   </error-page>
 </web-app>

@@ -20,7 +20,8 @@ import org.hibernate.validator.constraints.Email;
 @Table(name="usuario")
 @NamedQueries({
 	@NamedQuery(name="Usuario.findByEmailSenha", query="select u from Usuario u where u.email = :email and u.senha = :senha"),
-	@NamedQuery(name="Usuario.findById", query="select u from Usuario u where u.idUsuario = :idUsuario")
+	@NamedQuery(name="Usuario.findById", query="select u from Usuario u where u.idUsuario = :idUsuario"),
+	@NamedQuery(name="Usuario.listAll", query="select u from Usuario u")
 })
 public class Usuario implements Serializable {
 	/**
@@ -29,6 +30,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 340681521727137527L;
 	
 	private Long idUsuario;
+	private String nome;
 	private String email;
 	private String senha;
 	private Date dataLogin;
@@ -38,7 +40,7 @@ public class Usuario implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_usuario")
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -47,9 +49,18 @@ public class Usuario implements Serializable {
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	
+	@Column(name="nome", length=100, nullable=false)
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 	@Column(name="email", length=120, nullable=false, unique=true)
-	@Email(message="E-mail inválido.")
+	@Email(message="E-mail inválido.")	
 	public String getEmail() {
 		return email;
 	}

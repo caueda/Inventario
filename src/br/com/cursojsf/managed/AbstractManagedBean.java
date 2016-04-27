@@ -1,19 +1,23 @@
 package br.com.cursojsf.managed;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.com.cursojsf.entities.UserBean;
 
+@SuppressWarnings("unchecked")
 public class AbstractManagedBean {	
 	
-	@SuppressWarnings("unchecked")
 	public void cacheSession(UserBean userBean, HttpSession session, boolean onlyOneSessionPerUser) {
 		
 		session.setAttribute(UserBean.USER_LOGGED, userBean);
@@ -36,7 +40,7 @@ public class AbstractManagedBean {
 		return url + "?faces-redirect=true";
 	}
 	
-	protected String lougout(UserBean userBean, HttpSession session, boolean allSessions) {		
+	protected String logout(UserBean userBean, HttpSession session, boolean allSessions) throws IOException {		
 		Map<String, HttpSession> cached = (Map<String, HttpSession>)getApplicationMap().get(userBean.getKey());
 		Set<Entry<String, HttpSession>> entryKeySet = cached.entrySet();
 		for(Entry<String, HttpSession> entry : entryKeySet) {
@@ -50,7 +54,23 @@ public class AbstractManagedBean {
 		if(allSessions) {
 			cached.clear();
 		}
-		return "login";
+		Map<String, Object> cookieMap = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
+		Set<String> keys = cookieMap.keySet();
+		for(String key : keys) {
+			Cookie cookie = (Cookie)cookieMap.get(key);
+			if(cookie.getName().equals("JSESSIONID")) {
+				cookie.setMaxAge(0);
+				cookie.setValue("");
+				HttpServletResponse response = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
+				response.addCookie(cookie);
+			}
+		}
+		FacesContext.getCurrentInstance().getExternalContext().redirect(getURL(getRequest()) + "login.curso");
+		return "";
+	}
+	
+	public String getURL(final HttpServletRequest req) {
+		return "http://" + req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath() + "/";
 	}
 	
 	public String isUsuarioLogado(HttpSession session) {
@@ -69,8 +89,8 @@ public class AbstractManagedBean {
 					return "";
 				}
 			}
-		} else 
-			return "";
+		}  
+		return "";
 	}
 	
 	protected HttpSession getHttpSession(boolean value) {
@@ -83,5 +103,41 @@ public class AbstractManagedBean {
 	
 	protected HttpServletRequest getRequest() {
 		return (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	}
+	
+	protected void incluirInfo(String summary) {
+		incluirInfo(summary, "");
+	}
+	
+	protected void incluirInfo(String summary, String detail) {
+		FacesMessage message = new FacesMessage();
+		message.setSeverity(FacesMessage.SEVERITY_INFO);
+		message.setSummary(summary);
+		message.setDetail(detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	protected void incluirError(String summary) {
+		incluirError(summary, "");
+	}
+	
+	protected void incluirError(String summary, String detail) {
+		FacesMessage message = new FacesMessage();
+		message.setSeverity(FacesMessage.SEVERITY_ERROR);
+		message.setSummary(summary);
+		message.setDetail(detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	protected void incluirWarning(String summary) {
+		incluirWarning(summary, "");
+	}
+	
+	protected void incluirWarning(String summary, String detail) {
+		FacesMessage message = new FacesMessage();
+		message.setSeverity(FacesMessage.SEVERITY_WARN);
+		message.setSummary(summary);
+		message.setDetail(detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }
