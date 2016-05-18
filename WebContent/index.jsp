@@ -20,7 +20,7 @@
 	
 	<script>
 		$(function(){
-			$("#mensagem").dialog({width:500, height:150});
+			
 		});
 	</script>
 </head>

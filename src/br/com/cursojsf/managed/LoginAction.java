@@ -2,21 +2,24 @@ package br.com.cursojsf.managed;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import br.com.cursojsf.ejb.login.LoginBean;
+import br.com.cursojsf.entities.UserBean;
+import br.com.cursojsf.entities.Usuario;
 
 @ManagedBean
 @RequestScoped
-public class LoginAction implements Serializable {
+public class LoginAction extends AbstractManagedBean implements Serializable {
 
 	private static final long serialVersionUID = -5263706623967677173L;	
 	
-	@Inject
+	@EJB
 	private LoginBean loginBean;
 	
 	private String login;
@@ -42,25 +45,40 @@ public class LoginAction implements Serializable {
 		this.senha = senha;
 	}
 	
-	public void logar(){
+    public void onIdle() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                                        "Nenhuma atividade.", "O que você está fazendo por aí ?"));
+    }
+ 
+    public void onActive() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                        "Bem vindo", "Esta foi uma longa parada para o café!"));
+    }
+	
+	public String logar(){
 		try {
-			if(loginBean.autenticar(getLogin(), getSenha())){
-				FacesMessage message = new FacesMessage();
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				message.setSummary("Logado com sucesso.");
-				FacesContext.getCurrentInstance().addMessage(null, message);
-			} else {
-				FacesMessage message = new FacesMessage();
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				message.setSummary("Email ou senha incorretos.");
-				FacesContext.getCurrentInstance().addMessage(null, message);
+			Usuario usuario = loginBean.autenticar(getLogin(), getSenha());
+			if(usuario != null){				
+				 HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+				 UserBean userBean = new UserBean(usuario);				 
+				 cacheSession(userBean, session, true);
+				return redirect("home");
+			} else {				
+				incluirWarning("E-mail ou senha incorretos.");
+				return "";
 			}
 		} catch (Exception e) {
-			FacesMessage message = new FacesMessage();
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			message.setSummary(e.getMessage());
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			incluirError(e.getMessage());
+			return "";
+		}		
+	}
+	
+	public String logout() throws Exception {
+		HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		UserBean userBean = (UserBean)session.getAttribute(UserBean.USER_LOGGED);
+		if(userBean != null) {
+			return super.logout(userBean, session, true);
 		}
-//		return "home";
+		return redirect("login");
 	}
 }

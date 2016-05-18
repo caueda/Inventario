@@ -1,4 +1,3 @@
-
 This file has some tips about this little project.
 
 What we are using:
@@ -62,3 +61,25 @@ persistence.xml (version without datasource)
 		</properties>
 	</persistence-unit>
 </persistence>
+
+
+Setting the database.
+We're using the wampserver, so the instructions that follow will describe the steps based on 
+wampserver:
+Open Windows command and go to the directory:
+%WAMPSERVER_HOME%\wamp\bin\mysql\mysql5.6.17\bin
+#Login in MySQL
+mysql -u root
+#Put a password for root
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('welcome1');
+
+################# D A T A B A S E (MySQL) #################
+#Create a new database:
+create database inventario;
+#Create the user inventario
+grant all on inventario.* to 'inventario'@'localhost';
+#Set the password for the user 'inventario'@'localhost'
+SET PASSWORD FOR 'inventario'@'localhost' = PASSWORD('welcome1');
+#Import the script inventario.sql
+
+#You will need to set the password for myphpadmin for the root.

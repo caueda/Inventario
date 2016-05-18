@@ -9,9 +9,7 @@ public class Main {
 	 * Configurar o MySQL
 	 * mysql -u root -p
 	 * mysql> create database iventario;
-	 * mysql> set password for 'root'@'localhost' = PASSWORD('nova_senha');
-	 * mysql> create user 'aplicacao'@'localhost' identified by 'welcome1'
-	 * mysql> grant all on inventario.* to 'aplicacao'@'localhost'
+	 * mysql> grant all on inventario.* to 'aplicacao'@'localhost' identified by 'welcome1';
 	 * @param args
 	 */
 	public static void main(String[] args) {
