@@ -1,9 +1,9 @@
 package br.com.cursojsf.managed;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
@@ -22,18 +22,18 @@ public class AbstractManagedBean {
 		
 		session.setAttribute(UserBean.USER_LOGGED, userBean);
 		if(!getApplicationMap().containsKey(userBean.getKey())) {
-			getApplicationMap().put(userBean.getKey(), new HashMap<String, HttpSession>());
+			getApplicationMap().put(userBean.getKey(), new HashSet<HttpSession>());
 		}
 		
-		Map<String, HttpSession> cacheSessions = (Map<String, HttpSession>)getApplicationMap().get(userBean.getKey());
+		Set<HttpSession> cacheSessions = (Set<HttpSession>)getApplicationMap().get(userBean.getKey());
 		if(onlyOneSessionPerUser) {
-			for(HttpSession sessionToInvalidate : cacheSessions.values()) {
+			for(HttpSession sessionToInvalidate : cacheSessions) {
 				try { sessionToInvalidate.invalidate(); } catch(Exception e) {}
 			}
 			cacheSessions.clear();
 		}
 		
-		cacheSessions.put(session.getId(), session);
+		cacheSessions.add(session);
 	}
 	
 	public String redirect(String url) {
@@ -41,14 +41,15 @@ public class AbstractManagedBean {
 	}
 	
 	protected String logout(UserBean userBean, HttpSession session, boolean allSessions) throws IOException {		
-		Map<String, HttpSession> cached = (Map<String, HttpSession>)getApplicationMap().get(userBean.getKey());
-		Set<Entry<String, HttpSession>> entryKeySet = cached.entrySet();
-		for(Entry<String, HttpSession> entry : entryKeySet) {
+		Set<HttpSession> cached = (Set<HttpSession>)getApplicationMap().get(userBean.getKey());
+		Iterator<HttpSession> ite = cached.iterator();
+		while(ite.hasNext()) {
+			HttpSession sessionToInvalidate = ite.next();
 			if(allSessions) {
-				try {entry.getValue().invalidate();} catch(Exception e) {}
-			} else if(entry.getKey().equals(session.getId())) {
-				entry.getValue().invalidate();
-				cached.remove(entry.getKey());
+				try {sessionToInvalidate.invalidate();} catch(Exception e) {}
+			} else if(sessionToInvalidate.equals(session.getId())) {
+				sessionToInvalidate.invalidate();
+				ite.remove();
 			}			
 		}	
 		if(allSessions) {
