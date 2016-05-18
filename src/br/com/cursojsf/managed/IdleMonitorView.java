@@ -1,35 +1,19 @@
 package br.com.cursojsf.managed;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.servlet.http.HttpSession;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
-@RequestScoped
 public class IdleMonitorView extends AbstractManagedBean{
-    public boolean loggedOut;
-    
-    public void onIdle() {
-        HttpSession session = (HttpSession)getHttpSession(false);
-        if(session == null) {
-        	setLoggedOut(true);
-        }
-    }
-
-	public boolean isLoggedOut() {
-		return loggedOut;
-	}
-
-	public void setLoggedOut(boolean loggedOut) {
-		this.loggedOut = loggedOut;
-	}
 	
-	public String goLogin() {
-		return redirect("login");
-	}
-
-//    public void onActive() {
-//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-//                                        "Bem vindo", "Esta foi uma longa parada para o café!"));
-//    }
+    public void onIdle() {
+        FacesContext.getCurrentInstance().addMessage("messageMonitor", new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                                        "No activity.", "What are you doing over there?"));
+    }
+ 
+    public void onActive() {
+        FacesContext.getCurrentInstance().addMessage("messageMonitor", new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                        "Welcome Back", "Well, that's a long coffee break!"));
+    }
 }

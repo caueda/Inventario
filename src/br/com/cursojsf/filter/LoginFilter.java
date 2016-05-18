@@ -66,7 +66,7 @@ public class LoginFilter implements Filter {
 	        if (login != null) {	
 	        	chain.doFilter(request, response);
 	        } else {
-	        	res.sendRedirect(getURL(req) + "login.curso");
+	        	res.sendRedirect(getURL(req) + "login.curso?faces-redirect=true");
 	        }
 	    } else {
 	        chain.doFilter(request, response);
