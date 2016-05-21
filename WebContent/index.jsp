@@ -20,21 +20,14 @@
 	
 	<script>
 		$(function(){
-			
+			window.location.href = "http://<%= request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + "/login.curso" %>";
 		});
 	</script>
 </head>
 <body>
 	<div class="container">
 		<h1>Sistema de Inventário</h1>
-		<div id="mensagem" title="Deploy realizado com sucesso!">
-			<p>Parabéns. O deploy no Glassfish foi realizado com sucesso!!!</p>
-		</div>
-		<div>
-			<ul class="nav nav-tabs">
-				<li role="presentation" ><a href="home.curso">Home</a></li>
-			</ul>
-		</div>
+		<p>Redirecionando para a página de login...</p>
 	</div>
 </body>
 </html>

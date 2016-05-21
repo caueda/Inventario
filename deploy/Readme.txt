@@ -83,3 +83,9 @@ SET PASSWORD FOR 'inventario'@'localhost' = PASSWORD('welcome1');
 #Import the script inventario.sql
 
 #You will need to set the password for myphpadmin for the root.
+
+
+To config the Wildfly module for jdbc:
+
+Create a file path structure under the EAP_HOME/modules/ directory. 
+For example, for a MySQL JDBC driver, create a directory structure as follows: EAP_HOME/modules/com/mysql/main/.
