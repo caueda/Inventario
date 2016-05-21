@@ -12,7 +12,7 @@
 		</ui:define>
 		
 		<ui:define name="aplicacao">
-			<p:panel id="panelUser">			
+			<p:panel id="panelUser">		
 				<p:outputLabel for="nomePesquisa" value="Nome"/>
 				<p:inputText id="nomePesquisa" value="#{usuarioAction.usuario.nome}"/>
 				<p:outputLabel for="emailPesquisa" value="E-mail"/>
@@ -41,7 +41,7 @@
 					<p:outputLabel for="senha" value="Senha"/>
 					<p:password id="senha" value="#{usuarioAction.usuario.senha}" required="true" requiredMessage="A senha é obrigatória." placeholder="******"/>
 					
-					<p:commandButton value="Incluir" action="#{usuarioAction.incluir}" process="manterUser" update="table"/>
+					<p:commandButton value="Incluir" action="#{usuarioAction.incluir}" process="manterUser" update="manterUser,table"/>
 				</p:panel>
 			</p:dialog>				
 			
