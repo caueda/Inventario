@@ -5,6 +5,9 @@
 <head>
 	<title>Sistema de Inventário</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<base href="http://<%= request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + "/" %>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,6 +29,7 @@
 </head>
 <body>
 	<div class="container">
+		<script>alert('Redirecionando...');</script>
 		<h1>Sistema de Inventário</h1>
 		<p>Redirecionando para a página de login...</p>
 	</div>

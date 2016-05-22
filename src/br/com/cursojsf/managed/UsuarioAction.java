@@ -3,14 +3,13 @@ package br.com.cursojsf.managed;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 
 import br.com.cursojsf.ejb.login.UsuarioBean;
 import br.com.cursojsf.entities.Usuario;
 
-@ManagedBean
-@RequestScoped
+@Named
+@javax.enterprise.context.RequestScoped
 public class UsuarioAction extends AbstractManagedBean {	
 	private Usuario usuario;
 	private List<Usuario> listaUsuarios;

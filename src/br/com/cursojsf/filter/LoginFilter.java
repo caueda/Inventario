@@ -56,16 +56,12 @@ public class LoginFilter implements Filter {
         res.setDateHeader("Expires", 0); // Proxies.
         
 	    System.out.println(path);
-//	    
-//	    Enumeration<String> names = req.getAttributeNames();
-//	    while(names.hasMoreElements()) {
-//	    	System.out.println(">>>>>>>> " + names.nextElement());
-//	    }
 	    
-	    if (!path.contains("login.curso") && !Pattern.matches(".*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)) {
+	    if (!path.contains("login.curso") && !path.contains("home.curso") && !path.contains("index.jsp") && !Pattern.matches(".*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)) {
 	        if (login != null) {	
 	        	chain.doFilter(request, response);
 	        } else {
+	        	System.out.println("Redirecionando para index.jsp");
 	        	res.sendRedirect(getURL(req) + "index.jsp");
 	        }
 	    } else {

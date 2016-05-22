@@ -1,20 +1,20 @@
 package br.com.cursojsf.managed;
 
+
 import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import br.com.cursojsf.ejb.login.LoginBean;
 import br.com.cursojsf.entities.UserBean;
 import br.com.cursojsf.entities.Usuario;
 
-@ManagedBean
-@RequestScoped
+@Named
+@javax.enterprise.context.RequestScoped
 public class LoginAction extends AbstractManagedBean implements Serializable {
 
 	private static final long serialVersionUID = -5263706623967677173L;	
