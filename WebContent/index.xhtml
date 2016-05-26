@@ -1,19 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core">
+	<h:head>
+	    <title>Redirecinando para login...</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"></meta>
+		<meta http-equiv="Pragma" content="no-cache"></meta>
+		<meta http-equiv="Expires" content="0" />
+		<base href="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/"></base>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+	
+		<h:outputStylesheet library="jQuery" name="jquery-ui-1.11.4/jquery-ui.min.css"></h:outputStylesheet>
+		<h:outputScript library="jQuery" name="jquery-1.12.1.min.js"></h:outputScript>
+		<h:outputScript library="jQuery" name="jquery-ui-1.11.4/jquery-ui.min.js"></h:outputScript>
+	
+	    <!-- Bootstrap -->
+	    <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	    <h:outputStylesheet library="bootstrap" name="css/bootstrap-responsive.css"></h:outputStylesheet>
+	    <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.js"></h:outputStylesheet>
+	    <script>
+		$(document).ready(function(){
+		});
+		</script>
+	</h:head>
 
-<f:loadBundle basename="resources.application" var="msg"/>
-
-<head>
-    <title><h:outputText value="#{msg.welcomeTitle}" /></title>
-</head>
-
-<body>
-<h3><h:outputText value="#{msg.welcomeHeading}" /></h3>
-<p><h:outputText value="#{msg.welcomeMessage}" /></p>
-</body>
+	<body>
+		<p>Redirecionando para tela de login...</p>
+		<script> window.location.href = "http://localhost:8080/Inventario/login.curso";</script>
+	</body>
 </html>

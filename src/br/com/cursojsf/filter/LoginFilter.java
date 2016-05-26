@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.com.cursojsf.entities.UserBean;
 
@@ -45,7 +46,11 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {		
 	    HttpServletRequest req = (HttpServletRequest) request;
 	    HttpServletResponse res = (HttpServletResponse) response;
-	    UserBean login = (UserBean) req.getSession().getAttribute(UserBean.USER_LOGGED);
+	    HttpSession session = req.getSession(false);
+	    UserBean login = null;
+	    if(session != null){
+	    	login = (UserBean) session.getAttribute(UserBean.USER_LOGGED);
+	    }
 	    String path = req.getRequestURI().substring(req.getContextPath().length());	  
 	    
 	    @SuppressWarnings("unused")
@@ -55,20 +60,39 @@ public class LoginFilter implements Filter {
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setDateHeader("Expires", 0); // Proxies.
         
-	    System.out.println(path);
+	    System.out.println("url:" + path);
 	    
-	    if (!path.contains("login.curso") && !path.contains("home.curso") && !path.contains("index.jsp") && !Pattern.matches(".*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)) {
+	    if(Pattern.matches(".*javax\\.faces\\.resource.*|.*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)){
+	    	chain.doFilter(request, response);
+	    } else if(login == null && !path.contains("login.curso")){
+	    	res.sendRedirect(req.getContextPath() + "/login.curso");
+	    } else if(path.contains("login.curso") || path.contains("index.jsp")){
+	    	if(path.contains("index.jsp")){
+	    		System.out.println("shit!!!");
+	    	}
+	    	chain.doFilter(request, response);
+	    } else {
+	    	chain.doFilter(request, response);
+	    }
+	    /*
+	    if (!path.contains("login.curso") && !path.contains("index.curso") && !Pattern.matches(".*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)) {
 	        if (login != null) {	
+				System.out.println("Usuário logado");	    	
 	        	chain.doFilter(request, response);
 	        } else {
-	        	System.out.println("Redirecionando para index.jsp");
-	        	res.sendRedirect(getURL(req) + "index.jsp");
+				System.out.println("Usuário não está logado");	    
 	        }
 	    } else {
 	        chain.doFilter(request, response);
 	    }
+	    */
 	}
 
+	
+	public static void main(String[] args) {
+		String url = "/javax.faces.resource/jquery-1.12.1.min.js.curso;jsessionid=e5mOtJ8gBrv-tJtlygs5fkB5Q_w6Xz41xnZBhHP8.matrix";
+		System.out.println(Pattern.matches(".*javax\\.faces\\.resource.*|.*\\.js[;jsessionid=]*.*", url));
+	}
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */

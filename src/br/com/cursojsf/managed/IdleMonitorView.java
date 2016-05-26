@@ -3,10 +3,11 @@ package br.com.cursojsf.managed;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.io.Serializable;
 
 @Named
-@javax.enterprise.context.RequestScoped
-public class IdleMonitorView extends AbstractManagedBean{
+@javax.enterprise.context.SessionScoped
+public class IdleMonitorView extends AbstractManagedBean implements Serializable {
 	
     public void onIdle() {
         FacesContext.getCurrentInstance().addMessage("messageMonitor", new FacesMessage(FacesMessage.SEVERITY_WARN, 

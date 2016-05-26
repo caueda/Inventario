@@ -6,6 +6,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
@@ -13,8 +14,8 @@ import br.com.cursojsf.ejb.login.LoginBean;
 import br.com.cursojsf.entities.UserBean;
 import br.com.cursojsf.entities.Usuario;
 
-@Named
-@javax.enterprise.context.RequestScoped
+@Named("loginAction")
+@ViewScoped
 public class LoginAction extends AbstractManagedBean implements Serializable {
 
 	private static final long serialVersionUID = -5263706623967677173L;	
@@ -55,6 +56,11 @@ public class LoginAction extends AbstractManagedBean implements Serializable {
                                         "Bem vindo", "Esta foi uma longa parada para o café!"));
     }
 	
+    public String hello(){
+    	System.out.println("Hello World!");
+    	return "home";
+    }
+    
 	public String logar(){
 		try {
 			Usuario usuario = loginBean.autenticar(getLogin(), getSenha());

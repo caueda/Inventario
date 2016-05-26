@@ -1,29 +1,22 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"  
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>    
-    <title>Login</title>
-</h:head>	
-<h:body>
-	<ui:composition template="/template/loginTemplate.xhtml">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui"  
+				xmlns:f="http://java.sun.com/jsf/core"
+				template="/WEB-INF/template/loginTemplate.xhtml">
 		<ui:define name="titulo">Login</ui:define>
 		<ui:define name="corpo">			
-			<h:panelGrid id="grid" style="margin: 0 auto;">		
-				<h:form id="form" prependId="false">					
-					<p:panel header="Autênticação" footer="Prova de conceito JSF - Sistema de Inventário">
-						<p:outputLabel for="username" value="E-mail"/>					
-						<p:inputText id="username" value="#{loginAction.login}" required="true" requiredMessage="O E-mail é obrigatório."/>
-						<p:message for="username"/>					
-						<p:outputLabel for="senha" value="Senha"/>
-						<p:password  id="senha" value="#{loginAction.senha}" required="true" requiredMessage="A senha é obrigatória."/>						
-						<p:message for="senha"/>
-						<p:commandButton value="Logar" action="#{loginAction.logar}" update="grid"/>
-					</p:panel>			
-				</h:form>	
-			</h:panelGrid>	
+			<h:form id="loginForm">	
+				<p:panel header="Autênticação" footer="Prova de conceito JSF - Sistema de Inventário" id="panel">
+					<p:outputLabel for="username" value="E-mail"/>					
+					<p:inputText id="username" value="#{loginAction.login}" required="true" requiredMessage="O E-mail é obrigatório."/>
+					<p:message for="username"/>					
+					<p:outputLabel for="senha" value="Senha"/>
+					<p:password  id="senha" value="#{loginAction.senha}" required="true" requiredMessage="A senha é obrigatória."/>						
+					<p:message for="senha"/>
+					<p:commandButton value="Logar" action="#{loginAction.logar}" ajax="true" update="panel"/>
+				</p:panel>			
+			</h:form>	
 		</ui:define>
-	</ui:composition>
-</h:body>
-</html>
+</ui:composition>

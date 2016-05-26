@@ -1,3 +1,5 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -6,8 +8,7 @@
 <h:head>
 	<base href="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/"></base>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>	
-	
-	<script type="text/javascript" src="scripts/jquery-1.12.1.min.js"></script>    
+	<h:outputScript library="jQuery" name="jquery-1.12.1.min.js" target="body"></h:outputScript>
     <title><ui:insert name="titulo">Título da Página</ui:insert></title>
 </h:head>	
 <h:body>

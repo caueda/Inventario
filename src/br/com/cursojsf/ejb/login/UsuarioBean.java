@@ -8,19 +8,14 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Example;
 
 import br.com.cursojsf.entities.Usuario;
 
-@Named
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @Stateless
 public class UsuarioBean implements Serializable {
