@@ -62,30 +62,15 @@ public class LoginFilter implements Filter {
         
 	    System.out.println("url:" + path);
 	    
-	    if(Pattern.matches(".*javax\\.faces\\.resource.*|.*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)){
+	    if(Pattern.matches(".*resources.*|.*javax\\.faces\\.resource.*|.*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)){
 	    	chain.doFilter(request, response);
-	    } else if(login == null && !path.contains("login.curso")){
-	    	res.sendRedirect(req.getContextPath() + "/login.curso");
-	    } else if(path.contains("login.curso") || path.contains("index.jsp")){
-	    	if(path.contains("index.jsp")){
-	    		System.out.println("shit!!!");
-	    	}
+	    } else if(login == null && !path.contains("autenticar")){
+	    	res.sendRedirect(req.getContextPath() + "/index.jsp");
+	    } else if(path.contains("autenticar") || path.contains("index.jsp")){
 	    	chain.doFilter(request, response);
 	    } else {
 	    	chain.doFilter(request, response);
 	    }
-	    /*
-	    if (!path.contains("login.curso") && !path.contains("index.curso") && !Pattern.matches(".*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)) {
-	        if (login != null) {	
-				System.out.println("Usuário logado");	    	
-	        	chain.doFilter(request, response);
-	        } else {
-				System.out.println("Usuário não está logado");	    
-	        }
-	    } else {
-	        chain.doFilter(request, response);
-	    }
-	    */
 	}
 
 	

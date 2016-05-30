@@ -11,160 +11,48 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
 	<base href="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/"></base>
-	<h:outputScript library="jQuery" name="jquery-1.12.1.min.js" target="body"></h:outputScript>
-    <style>
-		html,
-		body {
-		  height: 100%;
-		  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-		  padding: 0;
-		  margin: 0;
-		  overflow: auto;
-		}
-		
-		.page-container {
-		  margin: 20px;
-		}
-		
-		/* horizontal panel*/
-		.panel-container {
-		  display: flex;
-		  flex-direction: row;
-		  border: 1px solid silver;
-		  overflow: hidden;
-		  
-		  /* avoid browser level touch actions */
-		  xtouch-action: none;
-		}
-		
-		.panel-left {
-		  flex: 0 0 auto;
-		  /* only manually resize */
-		  padding: 10px;
-		  width: 250px;
-		  min-height: 200px;
-		  min-width: 150px;
-		  white-space: nowrap;
-		  background: #838383;
-		  color: white;
-		}
-		
-		.splitter {
-		  flex: 0 0 auto;
-		  width: 18px;  
-		  background: url(http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/images/vsizegrip.png) center center no-repeat #535353;
-		  min-height: 200px;
-		  cursor: col-resize;  
-		}
-		
-		.panel-right {
-		  flex: 1 1 auto;
-		  /* resizable */
-		  padding: 10px;
-		  width: 100%;
-		  min-height: 200px;
-		  min-width: 200px;
-		  background: #eee;
-		}
-		
-		
-		/* vertical panel */
-		
-		.panel-container-vertical {
-		  display: flex;
-		  flex-direction: column;
-		  height: 500px;
-		  border: 1px solid silver;
-		  overflow: hidden;
-		}
-		
-		.panel-top {
-		  flex: 0 0 auto;
-		  /* only manually resize */
-		  padding: 10px;
-		  height: 150px;
-		  width: 100%;
-		  white-space: nowrap;
-		  background: #838383;
-		  color: white;
-		}
-		
-		.splitter-horizontal {
-		  flex: 0 0 auto;
-		  height: 18px;
-		  background: url(http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/images/hsizegrip.png) center center no-repeat #535353;
-		  cursor: row-resize;
-		}
-		
-		.panel-bottom {
-		  flex: 1 1 auto;
-		  /* resizable */
-		  padding: 10px;
-		  min-height: 200px;
-		  background: #eee;
-		}
-		
-		label {
-		  font-size: 1.2em;
-		  display: block;
-		  font-weight: bold;
-		  margin: 30px 0 10px;
-		}
-		
-		pre {
-		  margin: 20px;
-		  padding: 10px;
-		  background: #eee;
-		  border: 1px solid silver;
-		  border-radius: 4px;
-		  overflow: auto;
-		}
-	</style>
+	
+
+
+    <!-- Bootstrap -->
+    <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+    <h:outputStylesheet library="bootstrap" name="css/bootstrap-responsive.css"></h:outputStylesheet>
+    <h:outputScript library="bootstrap" name="js/bootstrap.min.js"></h:outputScript>
+    
     <title><ui:insert name="titulo">Inventário</ui:insert></title>
     
     <script>
-    <ui:insert name="script"></ui:insert>
+    $(document).ready(function(){
+    	$('.panel-left').resizable();
+    });
     </script>
     
     
 </h:head>	
-<h:body onload="$('.panel-left').resizable();">			
-        <h1>
-           Cabeçalho
-        </h1>
-        <div class="panel-container">        	
-            <div class="panel-left">
-                <h:form id="menuForm" prependId="false">                	
-				    <p:growl autoUpdate="true" sticky="true" />
-				    
-				    <p:growl id="messageMonitor" showDetail="true"/>				                	     
-				    <p:idleMonitor timeout="15000" >				        				        
-				        <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messageMonitor" />
-        				<p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messageMonitor" />
-				    </p:idleMonitor>	
-				    
-				    <p:panelMenu style="width:250">
-				        <p:submenu label="Usuário">
-				            <p:menuitem value="Manter" action="/application/user/usuario"  ajax="true" icon="ui-icon-close" update="panelapp"/>
-				        </p:submenu>
-				        <p:submenu label="Sistema">
-				        	<p:menuitem value="Logout" action="#{loginAction.logout}" ajax="true" icon="ui-icon-power" />
-				        </p:submenu>
-				        <p:separator/>				        
-				    </p:panelMenu>
-				</h:form>
-            </div>		
-            <div class="panel-right">
-            	<div class="content">
-	            	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
-	            	<h:form id="formapp" prependId="false">
-	            		<p:panel id="panelapp">
-	                	<ui:insert name="aplicacao"></ui:insert>
-	                	</p:panel>
-	                </h:form>
-                </div>
-            </div>
-        </div>		
+<h:body>			
+	  <h:form id="menuForm" prependId="false">                	
+		    <p:growl autoUpdate="true" sticky="true" />
+		    
+		    <p:growl id="messageMonitor" showDetail="true"/>				                	     
+		    <p:idleMonitor timeout="5000" >				        				        
+		        <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messageMonitor" />
+	     				<p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messageMonitor" />
+		    </p:idleMonitor>	
+		    
+		    <p:menubar>
+		        <p:submenu label="Usuário">
+		            <p:menuitem value="Manter" outcome="/application/user/usuario"  ajax="true" icon="ui-icon-close"/>
+		        </p:submenu>
+		        <p:submenu label="Sistema">
+		        	<p:menuitem value="Logout" url="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/deslogar"/>
+		        </p:submenu>
+		    </p:menubar>
+		</h:form>
+				
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
+    	<h:form id="formapp" prependId="false">
+        	<ui:insert name="aplicacao"></ui:insert>
+        </h:form>
 </h:body>
 
 </html>

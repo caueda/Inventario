@@ -1,36 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-	<title>Sistema de Inventário</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="0" />
-	<base href="http://<%= request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + "/" %>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-	<link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.min.css">
-	<script type="text/javascript" src="resources/jQuery/jquery-1.12.1.min.js"></script>
-	<script type="text/javascript" src="resources/jQuery/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-
-    <!-- Bootstrap -->
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <base href="http://<%= request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + "/" %>">
+  
+  <script src="resources/jQuery/jquery-1.12.1.min.js"></script>
+  <script src="resources/jQuery/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+  
+  <title>Dark Login Form</title>
+  <link rel="stylesheet" href="resources/login/css/style.css">
+  <link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.css">
+  <link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.theme.css">
+  <link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.structure.css">
+  <
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script>
+  	var queryString = function () {
+	  // This function is anonymous, is executed immediately and 
+	  // the return value is assigned to QueryString!
+	  var query_string = {};
+	  var query = window.location.search.substring(1);
+	  var vars = query.split("&");
+	  for (var i=0;i<vars.length;i++) {
+	    var pair = vars[i].split("=");
+	        // If first entry with this name
+	    if (typeof query_string[pair[0]] === "undefined") {
+	      query_string[pair[0]] = decodeURIComponent(pair[1]);
+	        // If second entry with this name
+	    } else if (typeof query_string[pair[0]] === "string") {
+	      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+	      query_string[pair[0]] = arr;
+	        // If third or later entry with this name
+	    } else {
+	      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+	    }
+	  } 
+	  return query_string;
+	}();
 	
-	<script>
-		$(function(){
-			window.location.href = "http://<%= request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + "/login.curso" %>";
-		});
-	</script>
+	$(document).ready(function(){
+		if(queryString.mensagem){
+			var msg = $("#messageDialog");
+			msg.html(queryString.mensagem.replace(/\+/g,' '));			
+			msg.dialog();
+		}
+	});
+  </script>
 </head>
 <body>
-	<div class="container">
-		<h1>Sistema de Inventário</h1>
-		<p><font style="color:green;">Redirecionando para a página de login...</font></p>
-	</div>
+  <form method="post" action="<%= request.getContextPath() %>/autenticar" class="login">
+    <p>
+      <label for="login">Email:</label>
+      <input type="text" name="login" id="login" value="">
+    </p>
+
+    <p>
+      <label for="senha">Password:</label>
+      <input type="password" name="senha" id="senha" value="">
+    </p>
+
+    <p class="login-submit">
+      <button type="submit" class="login-button">Login</button>
+    </p>
+  </form>
+  
+  <div id="messageDialog" title="Basic dialog" style="display: none;">
+  	<p><%= request.getAttribute("mensagem") %></p>
+  </div>
 </body>
 </html>
