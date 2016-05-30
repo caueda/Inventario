@@ -3,7 +3,6 @@ package br.com.cursojsf.servlet;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

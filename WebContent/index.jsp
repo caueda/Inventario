@@ -9,16 +9,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <base href="http://<%= request.getLocalName() + ":" + request.getLocalPort() + request.getContextPath() + "/" %>">
-  
   <script src="resources/jQuery/jquery-1.12.1.min.js"></script>
   <script src="resources/jQuery/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+  <script src="resources/jQuery/validate-1.1.2/jquery.validate.min.js"></script>
   
-  <title>Dark Login Form</title>
+  <title>Login Inventário</title>
   <link rel="stylesheet" href="resources/login/css/style.css">
   <link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.css">
   <link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.theme.css">
   <link rel="stylesheet" href="resources/jQuery/jquery-ui-1.11.4/jquery-ui.structure.css">
-  <
+  
   <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <script>
   	var queryString = function () {
@@ -44,12 +44,32 @@
 	  return query_string;
 	}();
 	
+	function validate(){
+		var msg = $("#messageDialog");
+		var message = "";
+		if($("#login").val() == ""){
+			message += "<li>O login é obrigatório.</li>";
+		}
+		if($("#senha").val() == ""){
+			message += "<li>A senha é obrigatória.</li>";
+		}
+		
+		if(message != ""){
+			msg.html("<ul>" + message + "</ul>");
+			msg.dialog();			
+			return false;
+		} else {			
+			return true;
+		}
+	}
+	
 	$(document).ready(function(){
+		var msg = $("#messageDialog");
 		if(queryString.mensagem){
-			var msg = $("#messageDialog");
 			msg.html(queryString.mensagem.replace(/\+/g,' '));			
 			msg.dialog();
-		}
+			return;
+		}		
 	});
   </script>
 </head>
@@ -66,7 +86,7 @@
     </p>
 
     <p class="login-submit">
-      <button type="submit" class="login-button">Login</button>
+      <button id="btnSubmit" type="submit" class="login-button" onclick="return validate()">Login</button>
     </p>
   </form>
   
