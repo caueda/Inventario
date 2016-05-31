@@ -5,11 +5,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
+
 import br.com.cursojsf.ejb.login.UsuarioBean;
 import br.com.cursojsf.entities.Usuario;
 
 @Named
 @javax.enterprise.context.RequestScoped
+@URLMapping(id="user", pattern="/app/usuario", viewId="/application/user/usuario")
 public class UsuarioAction extends AbstractManagedBean {	
 	private Usuario usuario;
 	private List<Usuario> listaUsuarios;

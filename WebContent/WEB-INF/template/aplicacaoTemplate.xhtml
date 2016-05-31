@@ -37,7 +37,7 @@
 		    
 		    <p:menubar>
 		        <p:submenu label="Usuário">
-		            <p:menuitem value="Manter" outcome="/application/user/usuario"  ajax="true" icon="ui-icon-close"/>
+		            <p:menuitem value="Manter" outcome="pretty:user"  ajax="true" icon="ui-icon-close"/>
 		        </p:submenu>
 		        <p:submenu label="Sistema">
 		        	<p:menuitem value="Logout" url="http://#{facesContext.externalContext.request.localAddr}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/deslogar"/>

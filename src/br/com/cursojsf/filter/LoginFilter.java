@@ -63,13 +63,24 @@ public class LoginFilter implements Filter {
 	    System.out.println("url:" + path);
 	    
 	    if(Pattern.matches(".*resources.*|.*javax\\.faces\\.resource.*|.*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)){
+	    	chain.doFilter(request, response);	    	
+	    } else if(login != null && path.contains("home")){
 	    	chain.doFilter(request, response);
 	    } else if(login == null && !path.contains("autenticar")){
 	    	res.sendRedirect(req.getContextPath() + "/index.jsp");
 	    } else if(path.contains("autenticar") || path.contains("index.jsp")){
-	    	chain.doFilter(request, response);
+	    	if(login != null){
+	    		res.sendRedirect(req.getContextPath() + "/home.curso");
+	    	} else
+	    		chain.doFilter(request, response);
 	    } else {
-	    	chain.doFilter(request, response);
+	    	if(login != null && path.contains("deslogar"))
+	    		chain.doFilter(request, response);
+	    	else if(login != null && path.equals("/")){
+	    		res.sendRedirect(req.getContextPath() + "/home.curso");
+	    	} else {
+	    		chain.doFilter(request, response);
+	    	}
 	    }
 	}
 
