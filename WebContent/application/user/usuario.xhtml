@@ -1,51 +1,45 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:p="http://primefaces.org/ui"  
-				xmlns:f="http://java.sun.com/jsf/core"
-				template="/WEB-INF/template/aplicacaoTemplate.xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui" 
+  xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/WEB-INF/template/aplicacaoTemplate.xhtml">
 				
 		<ui:define name="titulo">Inventário</ui:define>
 		
 		<ui:define name="aplicacao">
 			<p:panel id="panelUser">		
-				<p:outputLabel for="nomePesquisa" value="Nome"/>
-				<p:inputText id="nomePesquisa" value="#{usuarioAction.usuario.nome}"/>
-				<p:outputLabel for="emailPesquisa" value="E-mail"/>
-				<p:inputText id="emailPesquisa" value="#{usuarioAction.usuario.email}"/>
-				<p:commandButton value="Consultar" action="#{usuarioAction.consultar}" process="panelUser" update="table"/>						
+				<p:outputLabel for="nome" value="Nome"/>
+				<p:inputText id="nome" value="#{usuarioAction.usuario.nome}" required="true" requiredMessage="O nome é obrigatório." placeholder="Seu nome"/>
+				<p:outputLabel for="email" value="E-mail"/>
+				<p:inputText id="email" value="#{usuarioAction.usuario.email}" required="true" requiredMessage="O E-mail é obrigatório." placeholder="Seu E-mail"/>
+				<p:outputLabel for="senha" value="Senha"/>
+				<p:password id="senha" value="#{usuarioAction.usuario.senha}" required="true" requiredMessage="A senha é obrigatória." placeholder="******"/>
+				<br/>
+				<p:commandButton value="Incluir" action="#{usuarioAction.incluir}" process="panelUser" update="table"/>
 			</p:panel>		    
 			
-			<p:commandButton value="Incluir" type="button" onclick="PF('manterUser').show();" />
-			
-			<p:panel id="table">
-			<p:dataTable value="#{usuarioAction.listaUsuarios}" var="user">
-				<p:column headerText="ID">
-					<h:outputText value="#{user.idUsuario}"/>
-				</p:column>
-				<p:column headerText="Nome">
-					<h:outputText value="#{user.nome}"/>
-				</p:column>
-				<p:column headerText="E-mail">
-					<h:outputText value="#{user.email}"/>
-				</p:column>
-			</p:dataTable>
-			</p:panel>
-			
-			<p:dialog id="manterUser" modal="true" widgetVar="manterUser">
-				<p:panel>
-					<p:outputLabel for="nome" value="Nome"/>
-					<p:inputText id="nome" value="#{usuarioAction.usuario.nome}" required="true" requiredMessage="O nome é obrigatório." placeholder="Seu nome"/>
-					<p:outputLabel for="email" value="E-mail"/>
-					<p:inputText id="email" value="#{usuarioAction.usuario.email}" required="true" requiredMessage="O E-mail é obrigatório." placeholder="Seu E-mail"/>
-					<p:outputLabel for="senha" value="Senha"/>
-					<p:password id="senha" value="#{usuarioAction.usuario.senha}" required="true" requiredMessage="A senha é obrigatória." placeholder="******"/>
-					
-					<p:commandButton value="Incluir" action="#{usuarioAction.incluir}" process="manterUser" update="manterUser,table"/>
-				</p:panel>
-			</p:dialog>				
+			<p:panel id="table" header="Filtro de Pesquisa">
+				<p:outputLabel for="nomePesquisa" value="Nome"/>
+				<p:inputText id="nomePesquisa" value="#{usuarioAction.usuario.nome}"/>
+				<br/>
+				<p:commandButton value="Consultar" action="#{usuarioAction.consultar}" process="table" update="table"/>
+				<p:dataTable value="#{usuarioAction.listaUsuarios}" var="user" emptyMessage="Nenhum usuário encontrado." widgetVar="usersTable">
+					<p:column headerText="ID" width="10%">
+						<h:outputText value="#{user.idUsuario}"/>
+					</p:column>
+					<p:column filterBy="#{user.nome}" headerText="Nome" filterMatchMode="contains">
+						<h:outputText value="#{user.nome}"/>
+					</p:column>
+					<p:column headerText="E-mail">
+						<h:outputText value="#{user.email}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>				
 			
 		</ui:define>
 		
 </ui:composition>
+</html>

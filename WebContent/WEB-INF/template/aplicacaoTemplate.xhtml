@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"  
@@ -26,11 +27,9 @@
     
 </h:head>	
 <h:body>			
-	  <h:form id="menuForm" prependId="false">                	
-		    <p:growl autoUpdate="true" sticky="true" />
-		    
-		    <p:growl id="messageMonitor" showDetail="true"/>				                	     
-		    <p:idleMonitor timeout="5000" >				        				        
+	  <h:form id="menuForm" prependId="false">               	
+		    <p:growl id="messageMonitor" for="messageMonitor" showDetail="true"/>				                	     
+		    <p:idleMonitor timeout="60000" >				        				        
 		        <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messageMonitor" />
 	     		<p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messageMonitor" />
 		    </p:idleMonitor>	
@@ -45,7 +44,7 @@
 		    </p:menubar>
 		</h:form>
 				
-        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" globalOnly="true"/>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
     	<h:form id="formapp" prependId="false">
         	<ui:insert name="aplicacao"></ui:insert>
         </h:form>

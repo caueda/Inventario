@@ -17,7 +17,10 @@ import br.com.cursojsf.entities.UserBean;
 
 @SuppressWarnings("unchecked")
 public class AbstractManagedBean {	
-	
+	/*
+	 * Id do componente messages do aplicacaoTemplate.xhtml
+	 */
+	public static final String MESSAGE = "messages";
 	public void cacheSession(UserBean userBean, HttpSession session, boolean onlyOneSessionPerUser) {
 		
 		session.setAttribute(UserBean.USER_LOGGED, userBean);
@@ -115,7 +118,7 @@ public class AbstractManagedBean {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		message.setSummary(summary);
 		message.setDetail(detail);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(MESSAGE, message);
 	}
 	
 	protected void incluirError(String summary) {
@@ -127,7 +130,7 @@ public class AbstractManagedBean {
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		message.setSummary(summary);
 		message.setDetail(detail);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(MESSAGE, message);
 	}
 	
 	protected void incluirWarning(String summary) {
@@ -139,6 +142,6 @@ public class AbstractManagedBean {
 		message.setSeverity(FacesMessage.SEVERITY_WARN);
 		message.setSummary(summary);
 		message.setDetail(detail);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(MESSAGE, message);
 	}
 }

@@ -1,6 +1,8 @@
 package br.com.cursojsf.filter;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.servlet.DispatcherType;
@@ -26,7 +28,7 @@ import br.com.cursojsf.entities.UserBean;
 		}
 					, urlPatterns = { "/*" })
 public class LoginFilter implements Filter {
-
+	private static final Logger logger = Logger.getLogger(LoginFilter.class.getName()); 
     /**
      * Default constructor. 
      */
@@ -60,8 +62,9 @@ public class LoginFilter implements Filter {
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setDateHeader("Expires", 0); // Proxies.
         
-	    System.out.println("url:" + path);
+        logger.log(Level.INFO, "url: {0}", path);
 	    
+        //Liberar recursos: js e css.
 	    if(Pattern.matches(".*resources.*|.*javax\\.faces\\.resource.*|.*\\.js[;jsessionid=]*.*|.*\\.css[;jsessionid=]*.*|.*\\.css\\.curso[;jsessionid=]*.*|.*\\.js\\.curso[;jsessionid=]*.*", path)){
 	    	chain.doFilter(request, response);	    	
 	    } else if(login != null && path.contains("home")){

@@ -12,10 +12,11 @@ import br.com.cursojsf.entities.Usuario;
 
 @Named
 @javax.enterprise.context.RequestScoped
-@URLMapping(id="user", pattern="/app/usuario", viewId="/application/user/usuario")
+@URLMapping(id="user", pattern="/app/usuario", viewId="/application/user/usuario.curso")
 public class UsuarioAction extends AbstractManagedBean {	
 	private Usuario usuario;
 	private List<Usuario> listaUsuarios;
+	private List<Usuario> listaUsuariosFiltrados;
 	
 	@EJB
 	private UsuarioBean usuarioBean;
@@ -37,6 +38,14 @@ public class UsuarioAction extends AbstractManagedBean {
 		this.listaUsuarios = listaUsuarios;
 	}
 	
+	public List<Usuario> getListaUsuariosFiltrados() {
+		return listaUsuariosFiltrados;
+	}
+
+	public void setListaUsuariosFiltrados(List<Usuario> listaUsuariosFiltrados) {
+		this.listaUsuariosFiltrados = listaUsuariosFiltrados;
+	}
+
 	public void incluir() {
 		try {
 			usuarioBean.saveOrUpdate(this.usuario);			
